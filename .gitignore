@@ -399,3 +399,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Additional files to ignore
+appsettings.Development.json
+**/.DS_Store
