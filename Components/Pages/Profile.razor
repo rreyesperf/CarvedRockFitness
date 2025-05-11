@@ -1,18 +1,15 @@
 ﻿@page "/Profile"
-@using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Components.Authorization
-@inject AuthenticationStateProvider AuthStateProvider
-@attribute [Authorize]
+@inject IHttpContextAccessor HttpContextAccessor
 
 <h1>Profile</h1>
-<p>Username: @username</p>
+<p>Username: @clientPrincipalName</p>
 
 @code {
-    private string? username;
+    private string? clientPrincipalName { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-        username = authState.User.Identity?.Name;
+        // Read the X-MS-CLIENT-PRINCIPAL-NAME header
+        clientPrincipalName = HttpContextAccessor.HttpContext?.Request.Headers["X-MS-CLIENT-PRINCIPAL-NAME"];
     }
 }
