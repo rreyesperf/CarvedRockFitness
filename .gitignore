@@ -403,3 +403,4 @@ FodyWeavers.xsd
 # Additional files to ignore
 appsettings.Development.json
 **/.DS_Store
+.azure/

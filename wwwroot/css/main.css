@@ -2,10 +2,10 @@
 .header-nav--nav {border: 0; border-bottom: 1px solid #a0a0a0; margin-bottom: 0;}
 
 .header-nav--nav .header-nav--main ul {margin: 10px 0 10px;}
-.header-nav--nav .header-nav--main ul li.nav-item {font-size: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.2px; padding-bottom: 10px;}
+.header-nav--nav .header-nav--main ul li.nav-item {font-size: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.2px; padding-bottom: 6px;}
 .header-nav--nav .header-nav--main ul li.nav-item:after {content: ""; display: inline-block; width: 15px;}
 .header-nav--nav .header-nav--main ul li.nav-item:last-child:after {width: 0;}
-.header-nav--nav .header-nav--main ul li.nav-item a {padding: 0;}
+.header-nav--nav .header-nav--main ul li.nav-item a {padding: 1;}
 
 .header-nav--nav .header-nav--main .form-inline input.form-control {width: 330px; height: 30px; margin: 0; box-shadow: none;}
 .header-nav--nav .header-nav--main .form-inline .btn-default {background: #a0a0a0; position: relative; border: 0; border-radius: 0; font-weight: 300; width: 100px; height: 30px; min-width: auto; top: 0; left: -3px;}
@@ -98,7 +98,7 @@
 }
 
 /* STORIES */
-.crf-story  a > div {color: #364147;}
+.crf-story a > div {color: #364147;}
 .crf-story .crf-story--text {padding: 30px 0; text-transform: uppercase; text-align: center;}
 .crf-story .crf-story--text > div {font-size: 16px; font-weight: 200; color: #faa541;}
 .crf-story .crf-story--text h3 {font-size: 30px; font-weight: 700; line-height: 1; margin: 0;}
@@ -169,7 +169,7 @@ footer .crf-footer--social .pinterest, footer .crf-footer-m--social .pinterest {
 footer .crf-footer--social .googleplus, footer .crf-footer-m--social .googleplus {background-image: url('https://www.pluralsight.com/content/dam/pluralsight2/teach/author-tools/carved-rock-fitness/social_icons/GooglePlus_Icon.svg');}
 
 footer .crf-footer--logo {color: #e5e5e5; font-size: 16px; flex: 0 0 25%;}
-footer .crf-footer--logo img {max-width: 230px;}
+footer .crf-footer--logo img {max-width: 230px !important;}
 footer .crf-footer--logo .container {padding: 40px 0;}
 footer .crf-footer--logo .container > div {padding: 0 30px;}
 footer .crf-footer--logo .container > div:before {content: ""; display: block; width: 100%; height: 1px; margin: 30px 0; background: linear-gradient(to right,#f05a28 0,#e80a89 100%);}
@@ -221,15 +221,15 @@ footer .crf-footer--copyright {text-align: center; font-size: 12px; flex: 0 0 75
 
     footer .crf-footer-m--social .crf-footer--header {cursor: default;}
     footer .crf-footer-m--social ul {display: block; position: absolute; top: 0; right: 0;}
-    footer .crf-footer-m--social:after {display: none;}
+    footer .crf-footer-m--social:after {display: none !important;}
 
-    footer .crf-footer--social {order: 0; padding-bottom: 10px;}
+    footer .crf-footer--social {order: 0; padding-bottom: 10px !important;}
     footer .crf-footer--social:after {content: ""; display: block; height: 15px; background: white; margin: 40px -15px 0;}
 
-    footer .crf-footer--logo .container {padding: 40px 10px;}
+    footer .crf-footer--logo .container {padding: 40px 10px !important;}
 }
 @media only screen and (max-width: 768px) {
-    footer .crf-footer--category .row {flex-direction: column;}
+    footer .crf-footer--category .row {flex-direction: column !important;}
 }
 
 /* MOBILE VIEW ORDER */
