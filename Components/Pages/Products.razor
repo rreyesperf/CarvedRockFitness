@@ -1,11 +1,14 @@
 ﻿@page "/products/{Category?}"
+@rendermode InteractiveServer
 @using CarvedRockFitness.Repositories
 @using CarvedRockFitness.Models
+@using CarvedRockFitness.Services
 @inject IProductRepository ProductRepository
 @attribute [StreamRendering(true)]
+@inject ShoppingCartService CartService
+@inject CartEventService CartEventService
 
 <h2 class="text-primary">@(string.IsNullOrEmpty(Category) ? " All Products" : $" {Category.ToUpperInvariant()}")</h2>
-
 @if (products == null)
 {
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -53,8 +56,10 @@ else
                         <h3>@product.Name</h3>
                         <p>@product.Description</p>
                         <p>$@product.Price</p>
-                        <p><a href="#" class="btn btn-primary" role="button">View</a> <a href="#" class="btn btn-default"
-                                role="button">Add to Cart</a></p>
+                        <p>
+                            <NavLink class="btn btn-primary" role="button" href="@($"/viewproduct/{product.Id}")">View</NavLink>
+                            <button class="btn btn-default" role="button" @onclick="() => AddToCart(product)">Add to Cart</button>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -71,5 +76,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         products = await ProductRepository.GetByCategoryAsync(Category);
+    }
+    private async Task AddToCart(Product product)
+    {
+        Console.WriteLine("Adding to Cart " + product.Name);
+        await CartService.AddToCartAsync(product, 1);
+        await CartEventService.NotifyCartUpdatedAsync();
     }
 }

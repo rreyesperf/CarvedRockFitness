@@ -1,38 +1,7 @@
-@* <nav class="navbar navbar-expand-md bg-light header-nav--nav">
-    <div class="container header-nav--main">
-        <a class="navbar-brand" href="/">
-            <img alt="Carved Rock Fitness" src="images/logos/carved-rock-logo.png" style="height: 40px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-between align-items-center" id="navbarNav">
-            <div class="d-flex flex-column flex-md-row align-items-center w-100">
-                <div class="input-group my-2 my-md-0 me-md-3" style="max-width: 250px;">
-                    <input type="search" class="form-control" placeholder="What can we help you find?"
-                        aria-label="Search">
-                    <button class="btn btn-default" type="button">Search</button>
-                </div>
-                <ul class="header-nav-main navbar-nav flex-grow-1 justify-content-center">
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="products/clothing" Match="NavLinkMatch.All">Clothing</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="products/footwear" Match="NavLinkMatch.All">Footwear</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="products/equipment" Match="NavLinkMatch.All">Equipment</NavLink>
-                    </li>
-                    <li class="nav-item">
-                        <NavLink class="nav-link" href="trails" Match="NavLinkMatch.All">Trail Reviews</NavLink>
-                    </li>
-                </ul>
-                <Profile />
-            </div>
-        </div>
-    </div>
-</nav> *@
+@rendermode InteractiveServer
+@using CarvedRockFitness.Services
+@inject ShoppingCartService CartService
+@inject CartEventService CartEventService
 
 <nav class="navbar navbar-expand flex-column flex-md-row header-nav--nav">
     <div class="container">
@@ -69,7 +38,13 @@
                             </NavLink>
                         </li>
                         <li class="nav-item">
-                            <NavLink class="nav-link" href="trails" Match="NavLinkMatch.All">Trail Reviews</NavLink>
+                            <NavLink class="nav-link" href="cart" Match="NavLinkMatch.All">
+                                Cart
+                                @if (cartCount > 0)
+                                {
+                                    <span class="badge" style="background-color: #d9534f; color: white;">@cartCount</span>
+                                }
+                            </NavLink>
                         </li>
                     </ul>
                 </div>
@@ -89,5 +64,31 @@
 </nav>
 
 @code {
+    private int cartCount;
 
+    protected override async Task OnInitializedAsync()
+    {
+        CartEventService.CartUpdated += UpdateCartCount;
+        await UpdateCartCount();
+    }
+
+    private async Task UpdateCartCount()
+    {
+        try
+        {
+            Console.WriteLine("Navigation.razor: Updating cart count");
+            var cart = await CartService.GetCartAsync();
+            cartCount = cart.Sum(item => item.Quantity);
+            Console.WriteLine($"Navigation.razor: Cart count updated to {cartCount}");
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation.razor: Error updating cart count - {ex.Message}");
+        }
+    }
+    public void Dispose()
+    {
+        CartEventService.CartUpdated -= UpdateCartCount;
+    }
 }

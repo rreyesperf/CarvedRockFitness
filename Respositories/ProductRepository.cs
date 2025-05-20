@@ -48,6 +48,11 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetByIdAsync(int id)
     {
+        if (_useSampleData)
+        {
+            return GetSampleData().FirstOrDefault(p => p.Id == id);
+        }
+
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 

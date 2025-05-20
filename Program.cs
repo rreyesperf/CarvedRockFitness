@@ -1,4 +1,5 @@
 using CarvedRockFitness.Components;
+using CarvedRockFitness.Services;
 using CarvedRockFitness.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,29 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "CarvedRockFitness.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    // options.Cookie.SameSite = SameSiteMode.Lax;
+    // options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+});
+
+// Register ICartRepository based on connection string, or use in-memory cart
+if (!string.IsNullOrEmpty(builder.Configuration.GetConnectionString("DefaultConnection")))
+{
+    builder.Services.AddScoped<ICartRepository, SqlCartRepository>();
+}
+else
+{
+    builder.Services.AddScoped<ICartRepository, InMemoryCartRepository>();
+}
+
+builder.Services.AddScoped<ShoppingCartService>();
+builder.Services.AddSingleton<CartEventService>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
@@ -21,10 +45,14 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseHsts();
 }
 
 app.UseStaticFiles();
+app.UseRouting();
+app.UseSession();
 app.UseAntiforgery();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
