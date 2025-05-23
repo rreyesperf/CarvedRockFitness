@@ -124,7 +124,7 @@ public class ProductRepository : IProductRepository
 
         // Check if Products table exists
         var checkTableCommand = new SqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Products'", connection);
-        int tableCount = (int)await checkTableCommand.ExecuteScalar();
+        int tableCount = (int)await checkTableCommand.ExecuteScalarAsync();
 
         if (tableCount == 0)
         {
@@ -174,15 +174,15 @@ public class ProductRepository : IProductRepository
     {
         return new List<Product>
         {
-            new Product { Id = 1, Name = "Sample Product 1", Description = "Sample Product Description 1", ImageUrl = "images/products/boots/shutterstock_66842440.jpg", Price = 9.99m, Category = "Clothing" },
-            new Product { Id = 2, Name = "Sample Product 2", Description = "Sample Product Description 2", ImageUrl = "images/products/boots/shutterstock_475046062.jpg", Price = 19.99m, Category = "Clothing" },
-            new Product { Id = 3, Name = "Sample Product 3", Description = "Sample Product Description 3", ImageUrl = "images/products/boots/shutterstock_1121278055.jpg", Price = 29.99m, Category = "Clothing" },
-            new Product { Id = 4, Name = "Sample Product 4", Description = "Sample Product Description 4", ImageUrl = "images/products/boots/shutterstock_66842440.jpg", Price = 39.99m, Category = "Footwear" },
-            new Product { Id = 5, Name = "Sample Product 5", Description = "Sample Product Description 5", ImageUrl = "images/products/boots/shutterstock_222721876.jpg", Price = 49.99m, Category = "Footwear" },
-            new Product { Id = 6, Name = "Sample Product 6", Description = "Sample Product Description 6", ImageUrl = "images/products/boots/shutterstock_475046062.jpg", Price = 59.99m, Category = "Footwear" },
-            new Product { Id = 7, Name = "Sample Product 7", Description = "Sample Product Description 7", ImageUrl = "images/products/climbing gear/shutterstock_6170527.jpg", Price = 69.99m, Category = "Equipment" },
-            new Product { Id = 8, Name = "Sample Product 8", Description = "Sample Product Description 8", ImageUrl = "images/products/climbing gear/shutterstock_48040747.jpg", Price = 79.99m, Category = "Equipment" },
-            new Product { Id = 9, Name = "Sample Product 9", Description = "Sample Product Description 9", ImageUrl = "images/products/climbing gear/shutterstock_64998481.jpg", Price = 89.99m, Category = "Equipment" }
+            new Product { Id = 1, Name = "Sample Product 1", Description = "Sample Product Description 1", ImageUrl = "images/products/no-sign_red.png", Price = 9.99m, Category = "Clothing" },
+            new Product { Id = 2, Name = "Sample Product 2", Description = "Sample Product Description 2", ImageUrl = "images/products/no-sign_red.png", Price = 19.99m, Category = "Clothing" },
+            new Product { Id = 3, Name = "Sample Product 3", Description = "Sample Product Description 3", ImageUrl = "images/products/no-sign_red.png", Price = 29.99m, Category = "Clothing" },
+            new Product { Id = 4, Name = "Sample Product 4", Description = "Sample Product Description 4", ImageUrl = "images/products/no-sign_red.png", Price = 39.99m, Category = "Footwear" },
+            new Product { Id = 5, Name = "Sample Product 5", Description = "Sample Product Description 5", ImageUrl = "images/products/no-sign_red.png", Price = 49.99m, Category = "Footwear" },
+            new Product { Id = 6, Name = "Sample Product 6", Description = "Sample Product Description 6", ImageUrl = "images/products/no-sign_red.png", Price = 59.99m, Category = "Footwear" },
+            new Product { Id = 7, Name = "Sample Product 7", Description = "Sample Product Description 7", ImageUrl = "images/products/no-sign_red.png", Price = 69.99m, Category = "Equipment" },
+            new Product { Id = 8, Name = "Sample Product 8", Description = "Sample Product Description 8", ImageUrl = "images/products/no-sign_red.png", Price = 79.99m, Category = "Equipment" },
+            new Product { Id = 9, Name = "Sample Product 9", Description = "Sample Product Description 9", ImageUrl = "images/products/no-sign_red.png", Price = 89.99m, Category = "Equipment" }
         };
     }
 }
