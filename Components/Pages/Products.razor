@@ -7,6 +7,7 @@
 @attribute [StreamRendering(true)]
 @inject ShoppingCartService CartService
 @inject CartEventService CartEventService
+@inject ILogger<Products> Logger
 
 <h2 class="text-primary">@(string.IsNullOrEmpty(Category) ? " All Products" : $" {Category.ToUpperInvariant()}")</h2>
 @if (products == null)
@@ -75,11 +76,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        Logger.LogInformation("Loading products for category: {Category}", Category ?? "All Categories");
         products = await ProductRepository.GetByCategoryAsync(Category);
     }
     private async Task AddToCart(Product product)
     {
-        Console.WriteLine("Adding to Cart " + product.Name);
+        Logger.LogInformation("Adding to Cart " + product.Name);
         await CartService.AddToCartAsync(product, 1);
         await CartEventService.NotifyCartUpdatedAsync();
     }

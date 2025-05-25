@@ -7,6 +7,7 @@
 @attribute [StreamRendering(true)]
 @inject ShoppingCartService CartService
 @inject CartEventService CartEventService
+@inject ILogger<ViewProduct> Logger
 
 @if (product == null)
 {
@@ -45,13 +46,14 @@ else
     {
         if (Id.HasValue)
         {
+            Logger.LogInformation("Loading product with ID: {Id}", Id.Value);
             product = await ProductRepository.GetByIdAsync(Id.Value);
         }
     }
 
     private async Task AddToCart(Product product)
     {
-        Console.WriteLine("Adding to Cart " + product.Name);
+        Logger.LogInformation("Adding to Cart " + product.Name);
         await CartService.AddToCartAsync(product, 1);
         await CartEventService.NotifyCartUpdatedAsync();
     }

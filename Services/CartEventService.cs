@@ -1,5 +1,4 @@
 namespace CarvedRockFitness.Services;
-
 public class CartEventService
 {
     public event Func<Task>? CartUpdated;
