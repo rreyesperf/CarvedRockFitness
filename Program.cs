@@ -1,6 +1,7 @@
 using CarvedRockFitness.Components;
 using CarvedRockFitness.Services;
 using CarvedRockFitness.Repositories;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Logging.AddAzureWebAppDiagnostics();
 
 // Register ICartRepository based on connection string, or use in-memory cart
 if (!string.IsNullOrEmpty(builder.Configuration.GetConnectionString("DefaultConnection")))
