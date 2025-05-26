@@ -32,27 +32,8 @@
 </head>
 
 <body>
-    @if (slotName != "Production")
-    {
-        <div class="alert alert-danger" role="alert">
-            NOTICE: YOU ARE IN THE @slotName SLOT.
-        </div>
-    }
     <Routes />
     <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>
-
-@code {
-    string hostname = Environment.GetEnvironmentVariable("APPSETTING_WEBSITE_DEFAULT_HOSTNAME");
-    string siteName = Environment.GetEnvironmentVariable("APPSETTING_WEBSITE_SITE_NAME");
-    string slotName = "Production";
-    protected override void OnInitialized()
-    {
-        if (hostname != siteName)
-        {
-            slotName = hostname.Replace(".azurewebsites.net", "").Replace(siteName + "-", "");
-        }
-    }
-}
