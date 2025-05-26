@@ -50,6 +50,6 @@
     string slotName = "Production";
     if (hostname != siteName)
     {
-            string slotName = hostname.Replace(".azurewebsites.net", "").Replace(siteName + "-", "");
+            slotName = hostname.Replace(".azurewebsites.net", "").Replace(siteName + "-", "");
     }
 }
