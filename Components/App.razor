@@ -32,6 +32,12 @@
 </head>
 
 <body>
+    @if (Environment.GetEnvironmentVariable("WEBSITE_SLOT_NAME") != "Production")
+        {
+            <div class="alert alert-danger" role="alert">
+                NOTICE: YOU ARE IN THE @Environment.GetEnvironmentVariable("WEBSITE_SLOT_NAME") SLOT.
+            </div>
+        }
     <Routes />
     <script src="_framework/blazor.web.js"></script>
 </body>
