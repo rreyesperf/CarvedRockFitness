@@ -8,6 +8,10 @@ public class ShoppingCartService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly CartEventService _cartEventService;
 
+    private string? uniqueId { get; set; }
+
+    private string? identityProvider { get; set; }
+
     public ShoppingCartService(ICartRepository cartRepository, IHttpContextAccessor httpContextAccessor, CartEventService cartEventService)
     {
         _cartRepository = cartRepository;
@@ -18,8 +22,12 @@ public class ShoppingCartService
     private string GetSessionId() =>
         _httpContextAccessor.HttpContext?.Session.Id ?? Guid.NewGuid().ToString();
 
-    private string? GetUserId() =>
-        _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    private string? GetUserId() {
+        uniqueId = _httpContextAccessor.HttpContext?.Request.Headers["X-MS-CLIENT-PRINCIPAL-ID"];
+        identityProvider = _httpContextAccessor.HttpContext?.Request.Headers["X-MS-CLIENT-PRINCIPAL-IDP"];
+        return $"{identityProvider}-{uniqueId}";
+        // _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    }
 
     public async Task<List<CartItem>> GetCartAsync()
     {
