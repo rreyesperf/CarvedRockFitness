@@ -1,5 +1,4 @@
 using CarvedRockFitness.Models;
-using CarvedRockFitness.Repositories;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -153,9 +152,9 @@ public class ProductRepository : IProductRepository
                 INSERT INTO Products (Name, Description, Category, ImageUrl, Price)
                 VALUES 
                     ('PeakPulse Hiking Boots', 'Durable brown leather hiking boots with rugged soles, perfect for tough trails. Features ankle support and breathable lining.', 'Footwear', 'images/products/boots/shutterstock_66842440.jpg', 79.99),
-                    ('TrailTrek Hiking Sandals', 'Lightweight tan hiking sandals with ventilated design and adjustable straps, ideal for warm-weather adventures.', 'Footwear', 'images/products/sandals/shutterstock_222721876.jpg', 59.99),
-                    ('SummitStrider Trail Shoes', 'Sturdy gray trail shoes with pink accents, offering excellent grip and flexibility for all-terrain hikes.', 'Footwear', 'images/products/shoes/shutterstock_1121278055.jpg', 69.99),
-                    ('ClimbForce Climbing Shoes', 'Precision-fit climbing shoes with sticky rubber soles, designed for enhanced grip on rocky surfaces.', 'Footwear', 'images/products/shoes/shutterstock_475046062.jpg', 89.99),
+                    ('TrailTrek Hiking Sandals', 'Lightweight tan hiking sandals with ventilated design and adjustable straps, ideal for warm-weather adventures.', 'Footwear', 'images/products/boots/shutterstock_222721876.jpg', 59.99),
+                    ('SummitStrider Trail Shoes', 'Sturdy gray trail shoes with pink accents, offering excellent grip and flexibility for all-terrain hikes.', 'Footwear', 'images/products/boots/shutterstock_1121278055.jpg', 69.99),
+                    ('ClimbForce Climbing Shoes', 'Precision-fit climbing shoes with sticky rubber soles, designed for enhanced grip on rocky surfaces.', 'Footwear', 'images/products/boots/shutterstock_475046062.jpg', 89.99),
                     ('PeakLock Carabiner', 'Lightweight gold carabiner with screw-lock gate, rated for 23kN, ideal for secure climbing connections.', 'Equipment', 'images/products/climbing gear/shutterstock_362174360.jpg', 19.99),
                     ('SafePeak Helmet White', 'Ventilated white climbing helmet with adjustable straps, offering lightweight protection for all-day comfort.', 'Equipment', 'images/products/climbing gear/shutterstock_569026084.jpg', 49.99),
                     ('SafePeak Helmet Yellow', 'Bright yellow climbing helmet with durable shell and ventilation, perfect for visibility and safety on climbs.', 'Equipment', 'images/products/climbing gear/shutterstock_569026084.jpg', 49.99),

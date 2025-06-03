@@ -1,7 +1,4 @@
-using CarvedRockFitness.Models;
-using CarvedRockFitness.Repositories;
 using Microsoft.Data.SqlClient;
-using System.Data;
 
 public class SqlCartRepository : ICartRepository
 {
@@ -15,6 +12,7 @@ public class SqlCartRepository : ICartRepository
 
     public async Task<List<CartItem>> GetCartAsync(string sessionId, string? userId)
     {
+        await InitializeDatabaseIfEmpty();
         var items = new List<CartItem>();
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
@@ -87,5 +85,41 @@ public class SqlCartRepository : ICartRepository
         command.Parameters.AddWithValue("@UserId", (object?)userId ?? DBNull.Value);
         command.Parameters.AddWithValue("@SessionId", sessionId);
         await command.ExecuteNonQueryAsync();
+    }
+    private async Task InitializeDatabaseIfEmpty()
+    {
+        using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync();
+
+        var checkTableCommand = new SqlCommand(
+            "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CartItems'", connection);
+        int tableCount = (int)await checkTableCommand.ExecuteScalarAsync();
+
+        if (tableCount == 0)
+        {
+            string createDataSql = @"
+                CREATE TABLE CartItems (
+                    Id INT PRIMARY KEY IDENTITY(1,1),
+                    UserId NVARCHAR(128),
+                    ProductId INT NOT NULL,
+                    ProductName NVARCHAR(100) NOT NULL,
+                    Price DECIMAL(10,2) NOT NULL,
+                    Quantity INT NOT NULL,
+                    AddedAt DATETIME NOT NULL,
+                    FOREIGN KEY (ProductId) REFERENCES Products(Id)
+                );
+
+                INSERT INTO CartItems (UserId, ProductId, ProductName, Price, Quantity, AddedAt)
+                VALUES 
+                    ('SampleUser123', 1, 'PeakPulse Hiking Boots', 79.99, 2, @AddedAt1),
+                    ('SampleUser456', 5, 'PeakLock Carabiner', 19.99, 3, @AddedAt2),
+                    ('SampleUser789', 12, 'PeakPulse Backpack', 129.99, 1, @AddedAt3);";
+
+            using var command = new SqlCommand(createDataSql, connection);
+            command.Parameters.AddWithValue("@AddedAt1", DateTime.Now.AddDays(-1));
+            command.Parameters.AddWithValue("@AddedAt2", DateTime.Now.AddHours(-12));
+            command.Parameters.AddWithValue("@AddedAt3", DateTime.Now.AddHours(-6));
+            await command.ExecuteNonQueryAsync();
+        }
     }
 }
