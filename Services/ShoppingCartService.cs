@@ -25,7 +25,7 @@ public class ShoppingCartService
     private string? GetUserId() {
         uniqueId = _httpContextAccessor.HttpContext?.Request.Headers["X-MS-CLIENT-PRINCIPAL-ID"];
         identityProvider = _httpContextAccessor.HttpContext?.Request.Headers["X-MS-CLIENT-PRINCIPAL-IDP"];
-        return $"{identityProvider}{uniqueId}";
+        return (uniqueId != null && identityProvider != null) ? $"{identityProvider}{uniqueId}" : null;
     }
 
     public async Task<List<CartItem>> GetCartAsync()
