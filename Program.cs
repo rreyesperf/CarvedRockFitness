@@ -22,7 +22,8 @@ builder.Services.AddSession(options =>
 builder.Logging.AddAzureWebAppDiagnostics();
 
 // Register ICartRepository based on connection string, or use in-memory cart
-if (!string.IsNullOrEmpty(builder.Configuration.GetConnectionString("DefaultConnection")))
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DefaultConnection");
+if (!string.IsNullOrEmpty(connectionString))
 {
     builder.Services.AddScoped<ICartRepository, SqlCartRepository>();
 }

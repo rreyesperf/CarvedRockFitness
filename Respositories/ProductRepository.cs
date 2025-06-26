@@ -11,7 +11,7 @@ public class ProductRepository : IProductRepository
 
     public ProductRepository(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DefaultConnection");
         _useSampleData = string.IsNullOrEmpty(_connectionString);
     }
 

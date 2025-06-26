@@ -7,6 +7,7 @@ public class SqlCartRepository : ICartRepository
     public SqlCartRepository(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? Environment.GetEnvironmentVariable("DefaultConnection")
             ?? throw new InvalidOperationException("DefaultConnection string is missing.");
     }
 
